@@ -25,7 +25,15 @@ export default function Lecon({ params }) {
           <p><strong>PASS</strong> : {course.content.values.pass}<br />
           <strong>PMSS</strong> : {course.content.values.pmss}<br />
           <strong>Augmentation</strong> : {course.content.values.increase}</p>
+          {course.content.values.others && <p>{course.content.values.others}</p>}
           <p>Source : {course.content.values.source}</p>
+        </div>
+      )}
+
+      {course.content?.notions && (
+        <div className="section">
+          <h2>Notions clés</h2>
+          <p>{course.content.notions}</p>
         </div>
       )}
 
@@ -38,10 +46,52 @@ export default function Lecon({ params }) {
         </div>
       )}
 
+      {course.content?.methode && (
+        <div className="section">
+          <h2>Méthode</h2>
+          <ul>
+            {course.content.methode.map((m, i) => <li key={i}>{m}</li>)}
+          </ul>
+        </div>
+      )}
+
+      {course.content?.cas && (
+        <div className="section">
+          <h2>Cas concret (fictif)</h2>
+          <p>{course.content.cas}</p>
+        </div>
+      )}
+
+      {course.content?.controles && (
+        <div className="section">
+          <h2>Schéma de contrôle</h2>
+          <p>Chaîne : pièces → règle applicable → calcul → bulletin → DSN</p>
+          <p><strong>Contrôles prioritaires :</strong></p>
+          <ul>
+            {course.content.controles.map((c, i) => <li key={i}>{c}</li>)}
+          </ul>
+        </div>
+      )}
+
+      {course.content?.erreurs && (
+        <div className="section">
+          <h2>Erreurs à éviter</h2>
+          <ul>
+            {course.content.erreurs.map((e, i) => <li key={i}>{e}</li>)}
+          </ul>
+        </div>
+      )}
+
+      {course.content?.exercice && (
+        <div className="section">
+          <h2>Exercice</h2>
+          <p>{course.content.exercice}</p>
+        </div>
+      )}
+
       <div className="section">
-        <h2>Contenu de la leçon</h2>
-        <p>Le contenu détaillé (méthode, cas pratiques, exercices, quiz) sera intégré ici au fur et à mesure de la validation.</p>
-        <p>Pour le Module 01, les valeurs PASS/PMSS 2027 du communiqué du 16/10/2026 sont déjà intégrées.</p>
+        <h2>Statut</h2>
+        <p>Contenu pédagogique structuré. Validation réglementaire en attente de la publication de l’arrêté définitif 2027.</p>
       </div>
 
       <a href="/catalogue" className="btn">Retour au catalogue</a>

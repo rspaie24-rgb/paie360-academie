@@ -9,17 +9,40 @@ export const courses = [
     description: "PASS, PMSS et notions de base. Valeurs 2027 annoncées.",
     content: {
       objectives: [
-        "Comprendre le PASS et le PMSS",
-        "Connaître les valeurs annoncées pour 2027",
-        "Identifier les situations de proratisation"
+        "Comprendre ce qu’est le PASS et le PMSS",
+        "Connaître les valeurs officielles annoncées pour 2027",
+        "Savoir où trouver et vérifier les sources officielles",
+        "Identifier les situations de proratisation (entrée/sortie, temps partiel, absences)"
       ],
       values: {
         pass: "48 900 €",
         pmss: "4 075 €",
         increase: "+1,74 %",
-        source: "Communiqué du 16/10/2026"
+        source: "Communiqué du 16/10/2026",
+        others: "Trimestriel : 12 225 € • Quinzaine : 2 038 € • Hebdomadaire : 940 € • Journalier : 224 € • Horaire : 30 €"
       },
-      warning: "Un arrêté sera publié avant fin 2026. Ne pas appliquer en production avant confirmation."
+      warning: "Un arrêté fixant le niveau du plafond sera publié avant la fin de l’année 2026. Ne pas appliquer en production avant confirmation et archivage de l’arrêté. Le chapitre BOSS sera mis à jour au 01/01/2027.",
+      notions: "Le PASS (Plafond Annuel de la Sécurité Sociale) est le montant maximal des rémunérations ou gains à prendre en compte pour le calcul de certaines cotisations (principalement l’assurance vieillesse de base). Le PMSS est son équivalent mensuel (PASS / 12).",
+      methode: [
+        "Toujours distinguer la valeur annuelle (PASS) de la valeur mensuelle (PMSS)",
+        "Ne jamais appliquer un simple PASS / 12 sans vérifier les règles de proratisation",
+        "Documenter les données d’entrée (période, contrat, statut, CCN, justificatifs)",
+        "Contrôler la date de publication de l’arrêté avant toute utilisation"
+      ],
+      cas: "Une rémunération de 4 500 € dépasse le PMSS annoncé de 425 €. Ne pas en déduire automatiquement une assiette plafonnée de 4 075 € sans vérifier la situation complète (période travaillée, temps partiel, absences, etc.).",
+      controles: [
+        "Date de publication de l’arrêté",
+        "Entrée / sortie en cours de période",
+        "Temps partiel",
+        "Absences",
+        "Cumul de plusieurs contrats ou activités"
+      ],
+      erreurs: [
+        "Appliquer un taux ou un plafond non publié",
+        "Confondre absence de publication et maintien automatique du taux de l’année précédente",
+        "Oublier la proratisation en cas d’entrée/sortie ou de temps partiel"
+      ],
+      exercice: "Expliquer le traitement du cas suivant : Une rémunération de 4 500 € dépasse le PMSS annoncé de 425 €. Que faut-il vérifier avant de conclure ?"
     }
   },
   {
