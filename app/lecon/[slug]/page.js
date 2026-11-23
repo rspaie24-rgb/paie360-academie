@@ -47,15 +47,19 @@ export default function Lecon({ params }) {
         </div>
       )}
 
-      {course.content?.modesCalcul && (
+      {course.content?.formules && (
         <div className="section">
-          <h2>Modes de calcul selon la situation</h2>
-          {course.content.modesCalcul.map((m, i) => (
-            <div key={i} style={{marginBottom:'16px'}}>
-              <strong>{m.titre}</strong>
-              <p style={{margin:'4px 0 0'}}>{m.detail}</p>
+          <h2>Formules de proratisation (tous les cas)</h2>
+          {course.content.formules.map((f, i) => (
+            <div key={i} style={{marginBottom:'18px', paddingBottom:'12px', borderBottom:'1px solid #eee'}}>
+              <strong>{f.cas}</strong>
+              <p style={{margin:'6px 0', fontFamily:'monospace', background:'#f8f9fa', padding:'8px', borderRadius:'6px'}}>{f.formule}</p>
+              <p style={{margin:0, fontSize:'14px', color:'var(--muted)'}}>{f.note}</p>
             </div>
           ))}
+          <p style={{fontSize:'13px', color:'var(--muted)', marginTop:'12px'}}>
+            Sources : BOSS – Assiette générale (§ 690 à 760), article R. 242-2 du code de la sécurité sociale. Toujours vérifier la version en vigueur et la documentation du logiciel de paie.
+          </p>
         </div>
       )}
 
