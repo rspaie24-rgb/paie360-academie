@@ -6,7 +6,7 @@ export default function Lecon({ params }) {
   if (!course) notFound()
 
   return (
-    <div className="container" style={{maxWidth:'860px'}}>
+    <div className="container" style={{maxWidth:'900px'}}>
       <p style={{fontSize:'13px', color:'var(--muted)'}}>
         <a href="/catalogue">Catalogue</a> › {course.title}
       </p>
@@ -19,6 +19,18 @@ export default function Lecon({ params }) {
         </div>
       )}
 
+      <div className="section">
+        <h2>Schéma de la chaîne de calcul</h2>
+        <div className="schema">
+          <div className="schema-step">Pièces<br/><span className="muted-small">Contrat, période</span></div>
+          <div className="schema-step">Règle<br/><span className="muted-small">PASS / PMSS</span></div>
+          <div className="schema-step">Prorata<br/><span className="muted-small">Selon situation</span></div>
+          <div className="schema-step">Assiette<br/><span className="muted-small">Plafonnée</span></div>
+          <div className="schema-step">Bulletin<br/><span className="muted-small">Cotisations</span></div>
+        </div>
+        <p className="muted-small" style={{textAlign:'center'}}>De la situation réelle du salarié jusqu’au bulletin de paie</p>
+      </div>
+
       {course.content?.pourquoi && (
         <div className="section">
           <h2>Pourquoi cette rubrique existe</h2>
@@ -30,6 +42,11 @@ export default function Lecon({ params }) {
         <div className="section">
           <h2>Pourquoi le montant change chaque année</h2>
           <p>{course.content.pourquoiChange}</p>
+          <div className="visual-box">
+            <div className="big-number">+1,74 %</div>
+            <div>Augmentation annoncée 2027</div>
+            <div className="muted-small">Basée sur l’évolution du salaire moyen par tête</div>
+          </div>
         </div>
       )}
 
@@ -49,16 +66,18 @@ export default function Lecon({ params }) {
 
       {course.content?.formules && (
         <div className="section">
-          <h2>Formules de proratisation (tous les cas)</h2>
+          <h2>Formules de proratisation — synthèse visuelle</h2>
           {course.content.formules.map((f, i) => (
-            <div key={i} style={{marginBottom:'18px', paddingBottom:'12px', borderBottom:'1px solid #eee'}}>
-              <strong>{f.cas}</strong>
-              <p style={{margin:'6px 0', fontFamily:'monospace', background:'#f8f9fa', padding:'8px', borderRadius:'6px'}}>{f.formule}</p>
-              <p style={{margin:0, fontSize:'14px', color:'var(--muted)'}}>{f.note}</p>
+            <div key={i} className="formula-card">
+              <strong style={{color:'var(--navy)'}}>{f.cas}</strong>
+              <div style={{fontFamily:'monospace', background:'#fff', padding:'10px', borderRadius:'8px', margin:'8px 0', border:'1px solid #e4e9f0', fontSize:'15px'}}>
+                {f.formule}
+              </div>
+              <p className="muted-small" style={{margin:0}}>{f.note}</p>
             </div>
           ))}
-          <p style={{fontSize:'13px', color:'var(--muted)', marginTop:'12px'}}>
-            Sources : BOSS – Assiette générale (§ 690 à 760), article R. 242-2 du code de la sécurité sociale. Toujours vérifier la version en vigueur et la documentation du logiciel de paie.
+          <p className="muted-small" style={{marginTop:'12px'}}>
+            Sources : BOSS – Assiette générale (§ 690 à 760), article R. 242-2 CSS. Toujours vérifier la version en vigueur et le logiciel de paie.
           </p>
         </div>
       )}
@@ -66,11 +85,13 @@ export default function Lecon({ params }) {
       {course.content?.values && (
         <div className="section">
           <h2>Valeurs officielles annoncées 2027</h2>
-          <p><strong>PASS</strong> : {course.content.values.pass}<br />
-          <strong>PMSS</strong> : {course.content.values.pmss}<br />
-          <strong>Augmentation</strong> : {course.content.values.increase}</p>
-          {course.content.values.others && <p>{course.content.values.others}</p>}
-          <p>Source : {course.content.values.source}</p>
+          <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(140px, 1fr))', gap:'12px', margin:'12px 0'}}>
+            <div className="visual-box"><div className="big-number">48 900 €</div><div>PASS</div></div>
+            <div className="visual-box"><div className="big-number">4 075 €</div><div>PMSS</div></div>
+            <div className="visual-box"><div className="big-number">+1,74 %</div><div>Augmentation</div></div>
+          </div>
+          <p>{course.content.values.others}</p>
+          <p className="muted-small">Source : {course.content.values.source}</p>
         </div>
       )}
 
@@ -93,8 +114,6 @@ export default function Lecon({ params }) {
       {course.content?.controles && (
         <div className="section">
           <h2>Schéma de contrôle</h2>
-          <p>Chaîne : pièces → règle applicable → calcul → bulletin → DSN</p>
-          <p><strong>Contrôles prioritaires :</strong></p>
           <ul>
             {course.content.controles.map((c, i) => <li key={i}>{c}</li>)}
           </ul>
@@ -119,7 +138,7 @@ export default function Lecon({ params }) {
 
       <div className="section">
         <h2>Statut</h2>
-        <p>Contenu pédagogique structuré. Validation réglementaire en attente de la publication de l’arrêté définitif 2027.</p>
+        <p>Contenu pédagogique structuré avec schémas et formules. Validation réglementaire en attente de la publication de l’arrêté définitif 2027.</p>
       </div>
 
       <a href="/catalogue" className="btn">Retour au catalogue</a>
