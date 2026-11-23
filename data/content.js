@@ -8,11 +8,37 @@ export const courses = [
     status: "À valider",
     description: "PASS, PMSS et notions de base. Valeurs 2027 annoncées.",
     content: {
-      objectives: [
-        "Comprendre ce qu’est le PASS et le PMSS",
-        "Connaître les valeurs officielles annoncées pour 2027",
-        "Savoir où trouver et vérifier les sources officielles",
-        "Identifier les situations de proratisation (entrée/sortie, temps partiel, absences)"
+      pourquoi: "Le PASS (Plafond Annuel de la Sécurité Sociale) et le PMSS (Plafond Mensuel) existent pour limiter l’assiette de certaines cotisations sociales, principalement les cotisations d’assurance vieillesse de base. Ils servent aussi de référence pour d’autres calculs (certaines contributions, droits sociaux, etc.).",
+      pourquoiChange: "Le montant change chaque année parce qu’il est revalorisé en fonction de l’évolution du salaire moyen par tête (SMPT), conformément à l’article D. 242-17 du code de la sécurité sociale. L’objectif est d’adapter le plafond à l’évolution des salaires. Pour 2027, l’augmentation annoncée est de +1,74 %.",
+      roleBulletin: "Le PASS/PMSS n’apparaît généralement pas comme une ligne isolée sur le bulletin. Il influence directement le calcul des cotisations plafonnées (ex. : vieillesse plafonnée). C’est lui qui détermine la partie de la rémunération soumise ou non à certaines cotisations.",
+      apparition: "Sur le bulletin, son effet se voit dans les lignes de cotisations (assiette plafonnée vs déplafonnée). Il est aussi utilisé pour les proratisations en cas d’entrée/sortie, temps partiel ou absences.",
+      modesCalcul: [
+        {
+          titre: "Mois complet (cas standard)",
+          detail: "On applique le PMSS du mois (4 075 € pour 2027 annoncé) comme plafond mensuel pour les cotisations concernées."
+        },
+        {
+          titre: "Entrée ou sortie en cours de mois",
+          detail: "Le plafond est proratisé en fonction du nombre de jours travaillés (ou selon les règles du logiciel / de la CCN). Il ne faut jamais appliquer le PMSS plein si la période n’est pas complète."
+        },
+        {
+          titre: "Temps partiel",
+          detail: "Le plafond est réduit proportionnellement à la durée du travail par rapport à un temps plein. Un salarié à 50 % n’a pas le même PMSS de référence qu’un temps plein."
+        },
+        {
+          titre: "Absences",
+          detail: "Selon la nature de l’absence (maladie, congés, etc.), le plafond peut être proratisé ou non. Il faut toujours vérifier la règle applicable et la documentation du logiciel."
+        },
+        {
+          titre: "Plusieurs contrats ou cumuls",
+          detail: "Les plafonds se cumulent dans la limite du PASS annuel. Il faut reconstituer la situation globale du salarié."
+        }
+      ],
+      objectifs: [
+        "Comprendre pourquoi le PASS et le PMSS existent",
+        "Savoir pourquoi et comment ils évoluent chaque année",
+        "Identifier leur rôle concret sur le bulletin de paie",
+        "Maîtriser les différents modes de calcul selon la situation (contrat, présence, absences, temps partiel)"
       ],
       values: {
         pass: "48 900 €",
@@ -22,27 +48,20 @@ export const courses = [
         others: "Trimestriel : 12 225 € • Quinzaine : 2 038 € • Hebdomadaire : 940 € • Journalier : 224 € • Horaire : 30 €"
       },
       warning: "Un arrêté fixant le niveau du plafond sera publié avant la fin de l’année 2026. Ne pas appliquer en production avant confirmation et archivage de l’arrêté. Le chapitre BOSS sera mis à jour au 01/01/2027.",
-      notions: "Le PASS (Plafond Annuel de la Sécurité Sociale) est le montant maximal des rémunérations ou gains à prendre en compte pour le calcul de certaines cotisations (principalement l’assurance vieillesse de base). Le PMSS est son équivalent mensuel (PASS / 12).",
-      methode: [
-        "Toujours distinguer la valeur annuelle (PASS) de la valeur mensuelle (PMSS)",
-        "Ne jamais appliquer un simple PASS / 12 sans vérifier les règles de proratisation",
-        "Documenter les données d’entrée (période, contrat, statut, CCN, justificatifs)",
-        "Contrôler la date de publication de l’arrêté avant toute utilisation"
-      ],
-      cas: "Une rémunération de 4 500 € dépasse le PMSS annoncé de 425 €. Ne pas en déduire automatiquement une assiette plafonnée de 4 075 € sans vérifier la situation complète (période travaillée, temps partiel, absences, etc.).",
+      cas: "Une rémunération de 4 500 € dépasse le PMSS annoncé de 425 €. Avant de conclure sur l’assiette plafonnée, il faut vérifier : la période exacte travaillée, le temps de travail contractuel, les absences éventuelles et s’il y a d’autres contrats.",
       controles: [
         "Date de publication de l’arrêté",
-        "Entrée / sortie en cours de période",
-        "Temps partiel",
-        "Absences",
-        "Cumul de plusieurs contrats ou activités"
+        "Période exacte (entrée/sortie)",
+        "Durée du travail (temps plein / partiel)",
+        "Nature et durée des absences",
+        "Cumul éventuel avec d’autres contrats"
       ],
       erreurs: [
-        "Appliquer un taux ou un plafond non publié",
-        "Confondre absence de publication et maintien automatique du taux de l’année précédente",
-        "Oublier la proratisation en cas d’entrée/sortie ou de temps partiel"
+        "Appliquer le PMSS plein sans proratisation",
+        "Utiliser un plafond non confirmé par arrêté",
+        "Oublier l’impact du temps partiel ou des absences"
       ],
-      exercice: "Expliquer le traitement du cas suivant : Une rémunération de 4 500 € dépasse le PMSS annoncé de 425 €. Que faut-il vérifier avant de conclure ?"
+      exercice: "Un salarié entre le 15 du mois, travaille à 80 % et a 2 jours d’absence. Explique comment tu détermines le plafond à appliquer pour les cotisations plafonnées."
     }
   },
   {
