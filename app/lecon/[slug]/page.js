@@ -1,9 +1,51 @@
+'use client'
+import { useState } from 'react'
 import { courses } from '../../../data/content'
 import { notFound } from 'next/navigation'
+
+const schemaSteps = [
+  {
+    id: 'pieces',
+    label: 'Pièces',
+    sub: 'Contrat, période',
+    explication: 'On part des éléments concrets du salarié : contrat de travail, date d’entrée/sortie, temps de travail contractuel, absences du mois, justificatifs.',
+    situations: ['Entrée le 15 du mois', 'Temps partiel 80 %', '2 jours d’absence non rémunérée', 'Mois complet temps plein']
+  },
+  {
+    id: 'regle',
+    label: 'Règle',
+    sub: 'PASS / PMSS',
+    explication: 'On applique le plafond de la sécurité sociale en vigueur (PMSS annoncé 4 075 € pour 2027). C’est la base de référence avant tout ajustement.',
+    situations: ['PMSS plein si mois complet', 'Vérification de la date de l’arrêté', 'Distinction PASS annuel / PMSS mensuel']
+  },
+  {
+    id: 'prorata',
+    label: 'Prorata',
+    sub: 'Selon situation',
+    explication: 'Le plafond est ajusté selon la situation réelle : entrée/sortie, temps partiel, absences non rémunérées. On applique les formules de proratisation.',
+    situations: ['Prorata calendaire (entrée/sortie)', 'Coefficient temps partiel', 'Réduction pour absence non rémunérée', 'Combinaison de plusieurs coefficients']
+  },
+  {
+    id: 'assiette',
+    label: 'Assiette',
+    sub: 'Plafonnée',
+    explication: 'On obtient le plafond applicable du mois. C’est ce montant qui limite l’assiette des cotisations plafonnées (ex. vieillesse plafonnée).',
+    situations: ['Assiette limitée au plafond proratisé', 'Partie au-delà non soumise aux cotisations plafonnées', 'Comparaison avec le brut du mois']
+  },
+  {
+    id: 'bulletin',
+    label: 'Bulletin',
+    sub: 'Cotisations',
+    explication: 'Le résultat apparaît sur le bulletin dans les lignes de cotisations (assiette plafonnée vs déplafonnée). C’est l’étape finale visible pour le salarié et le contrôle.',
+    situations: ['Ligne vieillesse plafonnée', 'Différence plafonné / déplafonné', 'Contrôle de cohérence avec la situation']
+  }
+]
 
 export default function Lecon({ params }) {
   const course = courses.find(c => c.slug === params.slug)
   if (!course) notFound()
+
+  const [activeStep, setActiveStep] = useState(null)
 
   return (
     <div className="container" style={{maxWidth:'900px'}}>
@@ -20,15 +62,41 @@ export default function Lecon({ params }) {
       )}
 
       <div className="section">
-        <h2>Schéma de la chaîne de calcul</h2>
+        <h2>Schéma de la chaîne de calcul <span style={{fontSize:'14px', color:'var(--gold)'}}>(clique sur une étape)</span></h2>
         <div className="schema">
-          <div className="schema-step">Pièces<br/><span className="muted-small">Contrat, période</span></div>
-          <div className="schema-step">Règle<br/><span className="muted-small">PASS / PMSS</span></div>
-          <div className="schema-step">Prorata<br/><span className="muted-small">Selon situation</span></div>
-          <div className="schema-step">Assiette<br/><span className="muted-small">Plafonnée</span></div>
-          <div className="schema-step">Bulletin<br/><span className="muted-small">Cotisations</span></div>
+          {schemaSteps.map((step) => (
+            <div
+              key={step.id}
+              className="schema-step"
+              onClick={() => setActiveStep(activeStep === step.id ? null : step.id)}
+              style={{
+                cursor: 'pointer',
+                background: activeStep === step.id ? 'var(--gold)' : 'var(--navy)',
+                color: activeStep === step.id ? 'var(--navy)' : '#fff',
+                transform: activeStep === step.id ? 'scale(1.05)' : 'none'
+              }}
+            >
+              {step.label}<br/>
+              <span className="muted-small" style={{color: activeStep === step.id ? 'var(--navy)' : '#dce5f1'}}>{step.sub}</span>
+            </div>
+          ))}
         </div>
-        <p className="muted-small" style={{textAlign:'center'}}>De la situation réelle du salarié jusqu’au bulletin de paie</p>
+
+        {activeStep && (
+          <div className="visual-box" style={{marginTop:'20px', textAlign:'left'}}>
+            {schemaSteps.filter(s => s.id === activeStep).map(s => (
+              <div key={s.id}>
+                <strong>{s.label}</strong>
+                <p>{s.explication}</p>
+                <p><strong>Situations typiques :</strong></p>
+                <ul>
+                  {s.situations.map((sit, i) => <li key={i}>{sit}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        )}
+        <p className="muted-small" style={{textAlign:'center', marginTop:'12px'}}>Clique sur une étape pour voir l’explication et les situations</p>
       </div>
 
       {course.content?.pourquoi && (
@@ -138,7 +206,7 @@ export default function Lecon({ params }) {
 
       <div className="section">
         <h2>Statut</h2>
-        <p>Contenu pédagogique structuré avec schémas et formules. Validation réglementaire en attente de la publication de l’arrêté définitif 2027.</p>
+        <p>Contenu pédagogique structuré avec schémas interactifs et formules. Validation réglementaire en attente de la publication de l’arrêté définitif 2027.</p>
       </div>
 
       <a href="/catalogue" className="btn">Retour au catalogue</a>
