@@ -12,26 +12,26 @@ export const courses = [
       pourquoiChange: "Le montant change chaque année parce qu’il est revalorisé en fonction de l’évolution du salaire moyen par tête (SMPT), conformément à l’article D. 242-17 du code de la sécurité sociale. L’objectif est d’adapter le plafond à l’évolution des salaires. Pour 2027, l’augmentation annoncée est de +1,74 %.",
       roleBulletin: "Le PASS/PMSS n’apparaît généralement pas comme une ligne isolée sur le bulletin. Il influence directement le calcul des cotisations plafonnées (ex. : vieillesse plafonnée). C’est lui qui détermine la partie de la rémunération soumise ou non à certaines cotisations.",
       apparition: "Sur le bulletin, son effet se voit dans les lignes de cotisations (assiette plafonnée vs déplafonnée). Il est aussi utilisé pour les proratisations en cas d’entrée/sortie, temps partiel ou absences.",
-      modesCalcul: [
+      formules: [
         {
-          titre: "Mois complet (cas standard)",
-          detail: "On applique le PMSS du mois (4 075 € pour 2027 annoncé) comme plafond mensuel pour les cotisations concernées."
+          cas: "Entrée ou sortie en cours de mois",
+          formule: "PMSS × (nombre de jours calendaires de présence / nombre de jours du mois)",
+          note: "Jours calendaires (samedis, dimanches et fériés compris). Source : BOSS Assiette générale § 700 et 750 + CSS art. R. 242-2."
         },
         {
-          titre: "Entrée ou sortie en cours de mois",
-          detail: "Le plafond est proratisé en fonction du nombre de jours travaillés (ou selon les règles du logiciel / de la CCN). Il ne faut jamais appliquer le PMSS plein si la période n’est pas complète."
+          cas: "Temps partiel",
+          formule: "PMSS × (durée contractuelle + heures complémentaires) / durée légale (151,67 h) ou conventionnelle si inférieure",
+          note: "Facultatif : l’employeur et le salarié peuvent renoncer à la proratisation et cotiser sur le PMSS plein (BOSS § 760)."
         },
         {
-          titre: "Temps partiel",
-          detail: "Le plafond est réduit proportionnellement à la durée du travail par rapport à un temps plein. Un salarié à 50 % n’a pas le même PMSS de référence qu’un temps plein."
+          cas: "Absence non rémunérée",
+          formule: "PMSS × (nombre de jours rémunérés / nombre de jours calendaires du mois)",
+          note: "Les absences non rémunérées (congé sans solde, absence injustifiée, etc.) réduisent le plafond. Les absences avec maintien de salaire ou IJ soumises à cotisations ne le réduisent généralement pas."
         },
         {
-          titre: "Absences",
-          detail: "Selon la nature de l’absence (maladie, congés, etc.), le plafond peut être proratisé ou non. Il faut toujours vérifier la règle applicable et la documentation du logiciel."
-        },
-        {
-          titre: "Plusieurs contrats ou cumuls",
-          detail: "Les plafonds se cumulent dans la limite du PASS annuel. Il faut reconstituer la situation globale du salarié."
+          cas: "Combinaison (ex. temps partiel + entrée/sortie)",
+          formule: "Appliquer successivement les coefficients (temps partiel puis prorata calendaire, ou selon le logiciel)",
+          note: "Exemple : 80 % + 12 jours de présence sur 31 → PMSS × 0,8 × 12/31."
         }
       ],
       objectifs: [
