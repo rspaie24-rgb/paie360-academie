@@ -19,6 +19,46 @@ export default function Lecon({ params }) {
         </div>
       )}
 
+      {course.content?.pourquoi && (
+        <div className="section">
+          <h2>Pourquoi cette rubrique existe</h2>
+          <p>{course.content.pourquoi}</p>
+        </div>
+      )}
+
+      {course.content?.pourquoiChange && (
+        <div className="section">
+          <h2>Pourquoi le montant change chaque année</h2>
+          <p>{course.content.pourquoiChange}</p>
+        </div>
+      )}
+
+      {course.content?.roleBulletin && (
+        <div className="section">
+          <h2>Son rôle sur le bulletin de paie</h2>
+          <p>{course.content.roleBulletin}</p>
+        </div>
+      )}
+
+      {course.content?.apparition && (
+        <div className="section">
+          <h2>Comment il apparaît / agit sur le bulletin</h2>
+          <p>{course.content.apparition}</p>
+        </div>
+      )}
+
+      {course.content?.modesCalcul && (
+        <div className="section">
+          <h2>Modes de calcul selon la situation</h2>
+          {course.content.modesCalcul.map((m, i) => (
+            <div key={i} style={{marginBottom:'16px'}}>
+              <strong>{m.titre}</strong>
+              <p style={{margin:'4px 0 0'}}>{m.detail}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {course.content?.values && (
         <div className="section">
           <h2>Valeurs officielles annoncées 2027</h2>
@@ -30,27 +70,11 @@ export default function Lecon({ params }) {
         </div>
       )}
 
-      {course.content?.notions && (
+      {course.content?.objectifs && (
         <div className="section">
-          <h2>Notions clés</h2>
-          <p>{course.content.notions}</p>
-        </div>
-      )}
-
-      {course.content?.objectives && (
-        <div className="section">
-          <h2>Objectifs</h2>
+          <h2>Objectifs de la leçon</h2>
           <ul>
-            {course.content.objectives.map((o, i) => <li key={i}>{o}</li>)}
-          </ul>
-        </div>
-      )}
-
-      {course.content?.methode && (
-        <div className="section">
-          <h2>Méthode</h2>
-          <ul>
-            {course.content.methode.map((m, i) => <li key={i}>{m}</li>)}
+            {course.content.objectifs.map((o, i) => <li key={i}>{o}</li>)}
           </ul>
         </div>
       )}
